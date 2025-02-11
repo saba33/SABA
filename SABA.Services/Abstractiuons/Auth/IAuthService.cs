@@ -10,5 +10,6 @@ namespace SABA.Services.Abstractiuons.Auth
         Task<AddUserResponse> RegisterUserAsync(UserDto request, int? recommenderId);
         Task<LoginResponse> LoginUser(LoginRequestModel request);
         Task<Dictionary<byte[], byte[]>> GetHashandSalt(string mail);
+        Task<ResetPasswordResponse> ResetPassword(string mail);
     }
 }

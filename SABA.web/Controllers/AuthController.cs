@@ -31,5 +31,12 @@ namespace SABA.web.Controllers
             var result = await _authService.RegisterUserAsync(request, recommenderId);
             return Ok(result);
         }
+
+        [HttpPut("ForgotPassword")]
+        public async Task<ActionResult<ResetPasswordResponse>> ResetPassword(string Mail)
+        {
+            var result = await _authService.ResetPassword(Mail);
+            return Ok(result);
+        }
     }
 }

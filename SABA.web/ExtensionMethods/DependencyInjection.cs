@@ -5,10 +5,12 @@ using PashaBank.Services.Implementation.Auth;
 using SABA.Core.Abstractions;
 using SABA.Persistance.Implementations;
 using SABA.Services.Abstractiuons.Auth;
+using SABA.Services.Abstractiuons.Email;
 using SABA.Services.Abstractiuons.ProductSaleService;
 using SABA.Services.Abstractiuons.Recomentations;
 using SABA.Services.Abstractiuons.User;
 using SABA.Services.Implementations.Auth;
+using SABA.Services.Implementations.Email;
 using SABA.Services.Implementations.ProductSaleService;
 using SABA.Services.Implementations.Recomendation;
 using SABA.Services.Implementations.User;
@@ -49,6 +51,7 @@ namespace SABA.web.ExtensionMethods
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRecomendationServices, RecomendationServices>();
+            services.AddScoped<IEmailSendService, EmailSendService>();
             //services.AddScoped<IBonusService, BonusService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
