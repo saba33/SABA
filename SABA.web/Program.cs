@@ -3,9 +3,6 @@ using Microsoft.OpenApi.Models;
 using SABA.Persistance.DataContext;
 using SABA.web.ExtensionMethods;
 using SABA.web.MIddlewares;
-using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.MSSqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,18 +43,18 @@ builder.Services.AddSwaggerGen(c =>
      });
 });
 
-#pragma warning disable CS0618
-Log.Logger = new LoggerConfiguration()
-      .MinimumLevel.Verbose()
-      .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-      .Enrich.FromLogContext()
-      .WriteTo.MSSqlServer(
-          connectionString: builder.Configuration.GetConnectionString("connectionString"),
-          tableName: "Logs",
-          autoCreateSqlTable: true,
-          columnOptions: new ColumnOptions(),
-          restrictedToMinimumLevel: LogEventLevel.Verbose)
-      .CreateLogger();
+//#pragma warning disable CS0618
+//Log.Logger = new LoggerConfiguration()
+//      .MinimumLevel.Verbose()
+//      .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+//      .Enrich.FromLogContext()
+//      .WriteTo.MSSqlServer(
+//          connectionString: builder.Configuration.GetConnectionString("connectionString"),
+//          tableName: "Logs",
+//          autoCreateSqlTable: true,
+//          columnOptions: new ColumnOptions(),
+//          restrictedToMinimumLevel: LogEventLevel.Verbose)
+//      .CreateLogger();
 
 
 var app = builder.Build();
