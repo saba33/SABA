@@ -1,0 +1,8 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "./SABA.web/Dockerfile"
+
+[deploy]
+startCommand = "./SABA.web"
+restartPolicyType = "always"
+healthcheckPath = "/health"
