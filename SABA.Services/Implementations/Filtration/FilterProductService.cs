@@ -42,9 +42,9 @@ namespace SABA.Services.Implementations.Filtration
                 query = query.Where(p =>
                     p.ProductName.Contains(search) ||
                     p.ProductType.ToString().Contains(search) ||
-                    p.ProductType.ToString().Contains(search)) ||
-                    p.ProductCode.ToString().Contains(search);
+                    p.ProductType.ToString().Contains(search));
             }
+            return null;
         }
     }
 }
