@@ -25,4 +25,5 @@ RUN dotnet publish "./SABA.web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+RUN chmod +x /app/SABA.web.dll
 ENTRYPOINT ["dotnet", "SABA.web.dll"]
