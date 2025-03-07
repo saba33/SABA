@@ -3,6 +3,6 @@ builder = "dockerfile"
 dockerfilePath = "./SABA.web/Dockerfile"
 
 [deploy]
-startCommand = "./SABA.web"
+startCommand = "./SABA.web.dll"
 restartPolicyType = "always"
 healthcheckPath = "/health"
