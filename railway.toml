@@ -4,4 +4,3 @@ dockerfilePath = "./SABA.web/Dockerfile"
 
 [deploy]
 restartPolicyType = "always"
-healthcheckPath = "/health"
