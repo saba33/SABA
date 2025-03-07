@@ -1,4 +1,5 @@
-﻿using SABA.Core.Models.SaleModel;
+﻿using SABA.Core.Models.Enums;
+using SABA.Core.Models.SaleModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SABA.Core.Models.ProductModel
@@ -10,6 +11,7 @@ namespace SABA.Core.Models.ProductModel
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
+        public ProductTypes ProductType { get; set; }
         public ICollection<Sale> Sales { get; set; }
     }
 }

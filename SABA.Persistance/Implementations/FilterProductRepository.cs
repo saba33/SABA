@@ -1,23 +1,39 @@
-﻿using SABA.Core.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using PashaBank.Repository.Implementations;
+using SABA.Core.Abstractions;
 using SABA.Core.Models.ProductModel;
+using SABA.Persistance.DataContext;
 
 namespace SABA.Persistance.Implementations
 {
-    public class FilterProductRepository : IFilterProductRepository
+    public class FilterProductRepository : GenericRepository<Product>, IFilterProductRepository
     {
-        public Task<List<Product>> FilterByProductName(string productName)
+        private readonly DatabaseContext _context;
+        public FilterProductRepository(DatabaseContext context) : base(context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<List<Product>> FilterByProductName(string productName)
+        {
+            return (List<Product>)await this.FindAsync(p => p.ProductName == productName);
         }
 
-        public Task<List<Product>> FilterByProductProductCode(string productCode)
+        public async Task<List<Product>> FilterByProductProductCode(string productCode)
         {
-            throw new NotImplementedException();
+            return (List<Product>)await this.FindAsync(p => p.ProductCode == productCode);
         }
 
-        public Task<List<Product>> FilterProductByPrice(decimal priceFrom, decimal priceTo)
+        public async Task<List<Product>> FilterByProductProductType(int productType)
         {
-            throw new NotImplementedException();
+            return (List<Product>)await this.FindAsync(p => (int)p.ProductType == productType);
+        }
+        public IQueryable<Product> GetProductsQueryable()
+        {
+            return _context.Products.AsQueryable();
+        }
+        public async Task<List<Product>> FilterProductByPrice(decimal priceFrom, decimal priceTo)
+        {
+            return (List<Product>)await this.FindAsync(p => p.UnitPrice >= priceFrom && p.UnitPrice <= priceTo);
         }
     }
 }
