@@ -6,9 +6,10 @@ using SABA.web.MIddlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DatabaseContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString")));
 builder.Services.AddDependencies(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -43,36 +44,20 @@ builder.Services.AddSwaggerGen(c =>
      });
 });
 
-//#pragma warning disable CS0618
-//Log.Logger = new LoggerConfiguration()
-//      .MinimumLevel.Verbose()
-//      .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-//      .Enrich.FromLogContext()
-//      .WriteTo.MSSqlServer(
-//          connectionString: builder.Configuration.GetConnectionString("connectionString"),
-//          tableName: "Logs",
-//          autoCreateSqlTable: true,
-//          columnOptions: new ColumnOptions(),
-//          restrictedToMinimumLevel: LogEventLevel.Verbose)
-//      .CreateLogger();
-
-
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
+app.UseHttpsRedirection();  // Optional: Redirect HTTP to HTTPS (handled by Railway)
 app.UseAuthorization();
-
 app.UseMiddleware<LoggingMiddleware>();
-
-app.UseAuthorization();
-
 app.MapControllers();
 
-app.Run();
+// Use the port provided by Railway
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Run($"http://0.0.0.0:{port}");

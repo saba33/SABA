@@ -1,14 +1,9 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
+# Use the official ASP.NET Core runtime as a parent image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8080  # Only expose HTTP port
 
-# Ensure HTTPS certificate is available
-ENV ASPNETCORE_URLS="https://+:8081;http://+:8080"
-ENV DOTNET_GENERATE_ASPNET_CERTIFICATE=false
-
+# Use the SDK image to build the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
@@ -21,14 +16,13 @@ COPY . .
 WORKDIR "/src/SABA.web"
 RUN dotnet build "./SABA.web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+# Publish the application
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./SABA.web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+# Final stage: copy the build artifacts and run the application
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "SABA.web.dll"]
-
-
-
