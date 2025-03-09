@@ -1,6 +1,7 @@
 [build]
-builder = "dockerfile"
-dockerfilePath = "./SABA.web/Dockerfile"
+builder = "nixpacks"
+buildCommand = "dotnet build SABA.web/SABA.web.csproj -c Release"
+startCommand = "dotnet run --project SABA.web/SABA.web.csproj --urls=http://0.0.0.0:$PORT"
 
 [deploy]
 restartPolicyType = "always"
