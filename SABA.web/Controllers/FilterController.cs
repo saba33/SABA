@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SABA.Core.Models.Enums;
 using SABA.Services.Abstractiuons.Filtration;
@@ -46,7 +45,6 @@ namespace SABA.web.Controllers
          string search = null)
         {
             var result = await _productService.FilterProductsService(name, from, to, productCode, productType, search);
-
             var resultToReturn = _mapper.Map<List<ProductDto>>(result);
             return Ok(resultToReturn);
         }
