@@ -31,3 +31,4 @@ COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "SABA.web.dll"]
 
 
+
