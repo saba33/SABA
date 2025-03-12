@@ -13,5 +13,6 @@ namespace SABA.Services.Abstractiuons.ProductSaleService
         Task<AddProductResponse> AddProduct(ProductDto entity);
         Task<GetSaleResponse> GetSalesByUserId(int userId, DateTime StartDate, DateTime EndDate);
         Task<GetProductsResponse> GetProducts();
+        Task<GetProductsResponse> GetById(int id);
     }
 }

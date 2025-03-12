@@ -33,10 +33,23 @@ namespace SABA.Services.Implementations.ProductSaleService
             }
             return new UpdateProductResponse { Message = $"პროდუქტი აიდით{id} ვერ მოიძებნა ", StatusCode = StatusCodes.Status200OK };
         }
+
+        public async Task<GetProductsResponse> GetById(int productId)
+        {
+            var product = await _unitOfWork.Products.GetById(productId);
+            if (product == null)
+            { return new GetProductsResponse { Message = $"პროდუქტი აიდით {productId} ვერ მოიძებნა ", StatusCode = StatusCodes.Status200OK }; }
+            else
+            {
+                return new GetProductsResponse { Products = _mapper.Map<List<ProductDto>>(product), Message = "პროდუქტი წარმატებით მოიძებნა", StatusCode = StatusCodes.Status200OK };
+            }
+        }
+
         public async Task<AddProductResponse> AddProduct(ProductDto entity)
         {
             var productToInsert = _mapper.Map<Product>(entity);
             await _unitOfWork.Products.Add(productToInsert);
+            await _unitOfWork.SaveAsync();
             return new AddProductResponse
             {
                 Message = "Product Inserted successfully!",
