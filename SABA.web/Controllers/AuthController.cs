@@ -21,22 +21,46 @@ namespace SABA.web.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<LoginResponse>> Login(LoginRequestModel request)
         {
-            var result = await _authService.LoginUser(request);
-            return Ok(result);
+            try
+            {
+                var result = await _authService.LoginUser(request);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+               return BadRequest(e.Message);
+            }
+
         }
 
         [HttpPost("Register")]
         public async Task<ActionResult<RegisterResponse>> Register(UserDto request, int? recommenderId)
         {
-            var result = await _authService.RegisterUserAsync(request, recommenderId);
-            return Ok(result);
+            try
+            {
+                var result = await _authService.RegisterUserAsync(request, recommenderId);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
 
         [HttpPut("ForgotPassword")]
         public async Task<ActionResult<ResetPasswordResponse>> ResetPassword(string Mail)
         {
-            var result = await _authService.ResetPassword(Mail);
-            return Ok(result);
+            try
+            {
+                var result = await _authService.ResetPassword(Mail);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
         }
     }
 }

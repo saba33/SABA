@@ -7,10 +7,28 @@ using SABA.web.MIddlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    });
+
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDependencies(builder.Configuration);
+
+// Add CORS policy to allow all origins
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin() // Allow any origin
+              .AllowAnyHeader() // Allow any header
+              .AllowAnyMethod(); // Allow any HTTP method (GET, POST, etc.)
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -53,6 +71,10 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();  // Optional: Redirect HTTP to HTTPS (handled by Railway)
 app.UseAuthorization();
 app.UseMiddleware<LoggingMiddleware>();
+
+// Use CORS policy
+app.UseCors("AllowAllOrigins");
+
 app.MapControllers();
 
 // Use the port provided by Railway

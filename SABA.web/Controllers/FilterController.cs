@@ -23,9 +23,16 @@ namespace SABA.web.Controllers
         [HttpGet("FilterByName")]
         public async Task<ActionResult<List<ProductDto>>> FilterByName(string name)
         {
-            var result = await _productService.FilterByProductNameService(name);
-            var resultToReturn = _mapper.Map<List<ProductDto>>(result);
-            return Ok(resultToReturn);
+            try
+            {
+                var result = await _productService.FilterByProductNameService(name);
+                var resultToReturn = _mapper.Map<List<ProductDto>>(result);
+                return Ok(resultToReturn);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e);
+            }
         }
         [HttpGet("GetAllProduct")]
         public async Task<ActionResult<List<ProductDto>>> GetAllProducts()
@@ -43,9 +50,17 @@ namespace SABA.web.Controllers
         [HttpGet("FilterByPrice")]
         public async Task<ActionResult<List<ProductDto>>> FilterByPrice(decimal from, decimal to)
         {
-            var result = await _productService.FilterProductByPriceService(from, to);
-            var resultToReturn = _mapper.Map<List<ProductDto>>(result);
-            return Ok(resultToReturn);
+            try
+            {
+                var result = await _productService.FilterProductByPriceService(from, to);
+                var resultToReturn = _mapper.Map<List<ProductDto>>(result);
+                return Ok(resultToReturn);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e);
+            }
+
         }
         [HttpGet("Filter")]
         public async Task<ActionResult<List<ProductDto>>> Filter(
@@ -56,26 +71,49 @@ namespace SABA.web.Controllers
          ProductTypes? productType = null,
          string search = null)
         {
-            var result = await _productService.FilterProductsService(name, from, to, productCode, productType, search);
-            var resultToReturn = _mapper.Map<List<ProductDto>>(result);
-            return Ok(resultToReturn);
+            try
+            {
+                var result = await _productService.FilterProductsService(name, from, to, productCode, productType, search);
+                var resultToReturn = _mapper.Map<List<ProductDto>>(result);
+                return Ok(resultToReturn);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e);
+            }
+
         }
 
         [HttpGet("FilterByProductCode")]
         public async Task<ActionResult<List<ProductDto>>> FilterByPrice(string productCode)
         {
-            var result = await _productService.FilterByProductProductCodeService(productCode);
-            var resultToReturn = _mapper.Map<List<ProductDto>>(result);
-            return Ok(resultToReturn);
+            try
+            {
+                var result = await _productService.FilterByProductProductCodeService(productCode);
+                var resultToReturn = _mapper.Map<List<ProductDto>>(result);
+                return Ok(resultToReturn);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e);
+            }
         }
 
 
         [HttpGet("FilterByProductType")]
         public async Task<ActionResult<List<ProductDto>>> FilterByType(ProductTypes productType)
         {
-            var result = await _productService.FilterByProductProductTypeService(((ProductType)productType));
-            var resultToReturn = _mapper.Map<List<ProductDto>>(result);
-            return Ok(resultToReturn);
+            try
+            {
+                var result = await _productService.FilterByProductProductTypeService(((ProductType)productType));
+                var resultToReturn = _mapper.Map<List<ProductDto>>(result);
+                return Ok(resultToReturn);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e);
+            }
+
         }
 
 
