@@ -33,6 +33,10 @@ namespace SABA.Services.Implementations.Filtration
         {
             return await _filterRepo.FilterProductByPrice(priceFrom, priceTo);
         }
+        public async Task<List<Product>> GetAll()
+        {
+            return (List<Product>)await _filterRepo.GetAllAsync();
+        }
 
         public async Task<List<Product>> FilterProductsService(string name, decimal? from, decimal? to, string productCode, ProductTypes? productType, string search)
         {

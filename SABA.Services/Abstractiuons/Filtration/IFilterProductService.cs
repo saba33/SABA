@@ -11,6 +11,7 @@ namespace SABA.Services.Abstractiuons.Filtration
         public Task<List<Product>> FilterByProductProductCodeService(string productCode);
         public Task<List<Product>> FilterByProductProductTypeService(ProductType productType);
         public Task<List<Product>> FilterProductsService(string name, decimal? from, decimal? to, string productCode, ProductTypes? productType, string search);
+        public Task<List<Product>> GetAll();
 
     }
 }

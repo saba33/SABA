@@ -27,7 +27,19 @@ namespace SABA.web.Controllers
             var resultToReturn = _mapper.Map<List<ProductDto>>(result);
             return Ok(resultToReturn);
         }
+        [HttpGet("GetAllProduct")]
+        public async Task<ActionResult<List<ProductDto>>> GetAllProducts()
+        {
+            var result = await _productService.GetAll();
 
+            if (result == null)
+                return NotFound();
+            else
+            {
+                var resultToReturn = _mapper.Map<List<ProductDto>>(result);
+                return Ok(resultToReturn);
+            }
+        }
         [HttpGet("FilterByPrice")]
         public async Task<ActionResult<List<ProductDto>>> FilterByPrice(decimal from, decimal to)
         {
