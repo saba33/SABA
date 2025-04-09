@@ -6,9 +6,10 @@ namespace SABA.Services.Abstractiuons.User
     public interface IUserService
     {
         //Task<AddUserResponse> AddUserAsync(UserDto user, int? recommenderId);
-        Task<EditUserResponse> EditUserInfo(UserDto entity, int? recommenderId);
+        Task<EditUserResponse> EditUserInfo(UserDto entity, int userId);
         Task<RemoveUserResponse> RemoveUser(int Id);
         Task<GetUsersResponse> GetAllUsers();
         Task<GetUsersResponse> GetRecommendatorList();
+        Task<GetUsersResponse> GetUserById(int Id);
     }
 }

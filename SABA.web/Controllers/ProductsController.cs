@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SABA.Services.Abstractiuons.Filtration;
+﻿using Microsoft.AspNetCore.Mvc;
 using SABA.Services.Abstractiuons.ProductSaleService;
 using SABA.Services.Models.RequestModels.Products;
 using SABA.Services.Models.ResponseModels.ProductsAndSales;
-using System.Reflection.Metadata.Ecma335;
 
 namespace SABA.web.Controllers
 {
@@ -48,15 +45,15 @@ namespace SABA.web.Controllers
         }
 
 
-        [HttpGet("GetProductById")]
-        public async Task<ActionResult<ProductDto>> GetProductById(int id)
-        {
-            var result = await _service.GetById(id);
-            if (result.Products == null)
-                return NotFound(result);
+        //[HttpGet("GetProductById")]
+        //public async Task<ActionResult<ProductDto>> GetProductById(int id)
+        //{
+        //    var result = await _service.GetById(id);
+        //    if (result.Products == null)
+        //        return NotFound(result);
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         [HttpPut("UpdateProduct")]
         public async Task<ActionResult> UpdateProduct(ProductDto product, int Id)

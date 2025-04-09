@@ -22,9 +22,9 @@ namespace SABA.Services.Implementations.User
             _mapper = mapper;
         }
 
-        public async Task<EditUserResponse> EditUserInfo(UserDto entity, int? recommenderId)
+        public async Task<EditUserResponse> EditUserInfo(UserDto entity, int userId)
         {
-            var user = await _unit.Users.GetById(recommenderId.Value);
+            var user = await _unit.Users.GetById(userId);
             _mapper.Map(entity, user);
             _unit.Users.Update(user);
             await _unit.SaveAsync();
@@ -51,6 +51,26 @@ namespace SABA.Services.Implementations.User
             return new GetUsersResponse
             {
                 Users = usersToReturn,
+                Message = "Users returend Successfully",
+                StatusCode = StatusCodes.Status200OK
+            };
+        }
+
+        public async Task<GetUsersResponse> GetUserById(int Id)
+        {
+            var result = await _unit.Users.GetById(Id);
+            var usersToReturn = _mapper.Map<UserDto>(result);
+            if (usersToReturn == null)
+                return new GetUsersResponse
+                {
+                    Users = (IEnumerable<UserDto>)usersToReturn,
+                    Message = "Users table is empty",
+                    StatusCode = StatusCodes.Status200OK
+                };
+
+            return new GetUsersResponse
+            {
+                Users = (IEnumerable<UserDto>)usersToReturn,
                 Message = "Users returend Successfully",
                 StatusCode = StatusCodes.Status200OK
             };
