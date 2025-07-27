@@ -30,11 +30,11 @@ namespace SABA.web.Controllers
         }
 
         [HttpGet("GetAllUsers")]
-        public ActionResult<List<UserDto>> GetUserInfo()
+        public async Task<ActionResult<List<UserDto>>> GetUserInfo()
         {
             try
             {
-                var resut = _userService.GetAllUsers();
+                var resut = await _userService.GetAllUsers();
                 return Ok(resut);
             }
             catch (Exception ex)
