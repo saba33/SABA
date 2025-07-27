@@ -35,7 +35,8 @@ namespace PashaBank.Repository.Implementations
 
         public async Task<T> GetById(int id)
         {
-            return await _databaseContext.Set<T>().FindAsync(id);
+            var result = await _databaseContext.Set<T>().FindAsync(id);
+            return result;
         }
 
 

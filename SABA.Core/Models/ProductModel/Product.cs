@@ -12,6 +12,7 @@ namespace SABA.Core.Models.ProductModel
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public ProductTypes ProductType { get; set; }
+        //public string ProductSize { get; set; }
         public ICollection<Sale> Sales { get; set; }
     }
 }

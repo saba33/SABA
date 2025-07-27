@@ -23,15 +23,15 @@ namespace SABA.Services.Implementations.ProductSaleService
         }
         public async Task<UpdateProductResponse> UpdateProduct(ProductDto entity, int id)
         {
-            var product = _unitOfWork.Products.GetById(id);
-            if (product == null)
+            var product = await _unitOfWork.Products.GetById(id);
+            if (product != null)
             {
-                var productToUpdate = await _mapper.Map(entity, product);
+                var productToUpdate = _mapper.Map(entity, product);
                 _unitOfWork.Products.Update(productToUpdate);
                 await _unitOfWork.SaveAsync();
                 return new UpdateProductResponse { Message = "პროდუქტი წარმატებით დააბდეითდა", StatusCode = StatusCodes.Status200OK };
             }
-            return new UpdateProductResponse { Message = $"პროდუქტი აიდით{id} ვერ მოიძებნა ", StatusCode = StatusCodes.Status200OK };
+            return new UpdateProductResponse { Message = $"პროდუქტი აიდით{product.ProductId} ვერ მოიძებნა ", StatusCode = StatusCodes.Status200OK };
         }
 
         public async Task<GetProductsResponse> GetById(int productId)

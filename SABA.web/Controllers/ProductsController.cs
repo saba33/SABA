@@ -56,12 +56,12 @@ namespace SABA.web.Controllers
         //}
 
         [HttpPut("UpdateProduct")]
-        public async Task<ActionResult> UpdateProduct(ProductDto product, int Id)
+        public async Task<ActionResult<UpdateProductResponse>> UpdateProduct(ProductDto product, int Id)
         {
             try
             {
-                await _service.UpdateProduct(product, Id);
-                return Ok();
+                var response = await _service.UpdateProduct(product, Id);
+                return Ok(response);
             }
             catch (Exception e)
             {
