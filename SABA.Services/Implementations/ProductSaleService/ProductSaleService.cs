@@ -48,6 +48,18 @@ namespace SABA.Services.Implementations.ProductSaleService
         public async Task<AddProductResponse> AddProduct(ProductDto entity)
         {
             var productToInsert = _mapper.Map<Product>(entity);
+            //foreach (var formFile in entity.Images)
+            //{
+            //    using var memoryStream = new MemoryStream();
+            //    await formFile.CopyToAsync(memoryStream);
+
+            //    productToInsert.Images.Add(new ProductImage
+            //    {
+            //        ImageData = memoryStream.ToArray(),
+            //        ContentType = formFile.ContentType,
+            //        FileName = formFile.FileName
+            //    });
+            //}
             await _unitOfWork.Products.Add(productToInsert);
             await _unitOfWork.SaveAsync();
             return new AddProductResponse

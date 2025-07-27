@@ -15,6 +15,7 @@ namespace SABA.Services.Infrastructure.Mappings
             CreateMap<UserDto, User>().ReverseMap();
             CreateMap<SaleDto, Sale>().ReverseMap();
             CreateMap<ProductDto, Product>().ReverseMap();
+            CreateMap<ProductImageDto, ProductImage>().ReverseMap();
         }
     }
 }
