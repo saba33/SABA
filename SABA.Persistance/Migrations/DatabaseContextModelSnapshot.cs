@@ -53,10 +53,6 @@ namespace SABA.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductSize")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ProductType")
                         .HasColumnType("int");
 
@@ -66,36 +62,6 @@ namespace SABA.Persistance.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("SABA.Core.Models.ProductModel.ProductImage", b =>
-                {
-                    b.Property<int>("ImageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"));
-
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("ImageData")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ImageId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImage");
                 });
 
             modelBuilder.Entity("SABA.Core.Models.RecomendationModel.Recommendation", b =>
@@ -213,17 +179,6 @@ namespace SABA.Persistance.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SABA.Core.Models.ProductModel.ProductImage", b =>
-                {
-                    b.HasOne("SABA.Core.Models.ProductModel.Product", "Product")
-                        .WithMany("Images")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("SABA.Core.Models.RecomendationModel.Recommendation", b =>
                 {
                     b.HasOne("SABA.Core.Models.UserModel.User", "RecommendedUser")
@@ -262,11 +217,6 @@ namespace SABA.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Recommender");
-                });
-
-            modelBuilder.Entity("SABA.Core.Models.ProductModel.Product", b =>
-                {
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("SABA.Core.Models.UserModel.User", b =>

@@ -37,29 +37,45 @@ namespace SABA.Services.Implementations.ProductSaleService
         public async Task<GetProductsResponse> GetById(int productId)
         {
             var product = await _unitOfWork.Products.GetById(productId);
+
             if (product == null)
-            { return new GetProductsResponse { Message = $"პროდუქტი აიდით {productId} ვერ მოიძებნა ", StatusCode = StatusCodes.Status200OK }; }
+            {
+                return new GetProductsResponse { Message = $"პროდუქტი აიდით {productId} ვერ მოიძებნა ", StatusCode = StatusCodes.Status404NotFound };
+            }
             else
             {
-                return new GetProductsResponse { Products = _mapper.Map<List<ProductDto>>(product), Message = "პროდუქტი წარმატებით მოიძებნა", StatusCode = StatusCodes.Status200OK };
+                var productDto = _mapper.Map<ProductResponseDto>(product);
+
+                var productList = new List<ProductResponseDto> { productDto };
+
+                return new GetProductsResponse
+                {
+                    Products = productList,
+                    Message = "პროდუქტი წარმატებით მოიძებნა",
+                    StatusCode = StatusCodes.Status200OK
+                };
             }
         }
 
         public async Task<AddProductResponse> AddProduct(ProductDto entity)
         {
-            var productToInsert = _mapper.Map<Product>(entity);
-            //foreach (var formFile in entity.Images)
-            //{
-            //    using var memoryStream = new MemoryStream();
-            //    await formFile.CopyToAsync(memoryStream);
+            Product productToInsert = _mapper.Map<Product>(entity);
+            if (entity.Images != null)
+            {
+                foreach (var formFile in entity.Images)
+                {
+                    using var memoryStream = new MemoryStream();
+                    await formFile.CopyToAsync(memoryStream);
 
-            //    productToInsert.Images.Add(new ProductImage
-            //    {
-            //        ImageData = memoryStream.ToArray(),
-            //        ContentType = formFile.ContentType,
-            //        FileName = formFile.FileName
-            //    });
-            //}
+                    productToInsert.Images.Add(new ProductImage
+                    {
+                        ImageData = memoryStream.ToArray(),
+                        ContentType = formFile.ContentType,
+                        FileName = formFile.FileName
+                    });
+                }
+            }
+
             await _unitOfWork.Products.Add(productToInsert);
             await _unitOfWork.SaveAsync();
             return new AddProductResponse
@@ -71,20 +87,20 @@ namespace SABA.Services.Implementations.ProductSaleService
         public async Task<GetProductsResponse> GetProducts()
         {
             var result = await _unitOfWork.Products.GetAllAsync();
-            var ProductToReturn = _mapper.Map<List<ProductDto>>(result);
+            var productToReturn = _mapper.Map<List<ProductResponseDto>>(result);
             if (result != null)
             {
                 return new GetProductsResponse
                 {
-                    Products = ProductToReturn,
+                    Products = productToReturn,
                     Message = "Products Returned successfully!",
                     StatusCode = StatusCodes.Status200OK
                 };
             }
             return new GetProductsResponse
             {
-                Products = ProductToReturn,
-                Message = $"{nameof(ProductToReturn)}",
+                Products = productToReturn,
+                Message = $"{nameof(productToReturn)}",
                 StatusCode = StatusCodes.Status404NotFound
             };
         }

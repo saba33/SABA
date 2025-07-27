@@ -14,6 +14,7 @@ namespace SABA.Persistance.DataContext
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Sale> Sales { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Recommendation> Recommendations { get; set; }
         public DbSet<Product> Products { get; set; }
         //public DbSet<Bonus> Bonuses { get; set; }

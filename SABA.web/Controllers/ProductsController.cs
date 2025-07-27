@@ -45,15 +45,18 @@ namespace SABA.web.Controllers
         }
 
 
-        //[HttpGet("GetProductById")]
-        //public async Task<ActionResult<ProductDto>> GetProductById(int id)
-        //{
-        //    var result = await _service.GetById(id);
-        //    if (result.Products == null)
-        //        return NotFound(result);
+        [HttpGet("GetProductById")]
+        public async Task<ActionResult<ProductDto>> GetProductById(int id)
+        {
+            var result = await _service.GetById(id);
 
-        //    return Ok(result);
-        //}
+            if (result.Products == null || !result.Products.Any())
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
+        }
 
         [HttpPut("UpdateProduct")]
         public async Task<ActionResult<UpdateProductResponse>> UpdateProduct(ProductDto product, int Id)

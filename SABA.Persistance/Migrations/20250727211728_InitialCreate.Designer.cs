@@ -12,8 +12,8 @@ using SABA.Persistance.DataContext;
 namespace SABA.Persistance.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250130122927_createdmodels")]
-    partial class createdmodels
+    [Migration("20250727211728_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,6 +55,9 @@ namespace SABA.Persistance.Migrations
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductType")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
@@ -148,7 +151,6 @@ namespace SABA.Persistance.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Picture")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<int?>("RecommenderId")

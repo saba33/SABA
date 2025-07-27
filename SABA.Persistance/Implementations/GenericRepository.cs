@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SABA.Core.Abstractions;
+using SABA.Core.Models.ProductModel;
 using SABA.Persistance.DataContext;
 using System.Linq.Expressions;
 
@@ -30,13 +31,24 @@ namespace PashaBank.Repository.Implementations
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
+            if (typeof(T) == typeof(Product))
+            {
+                return (IEnumerable<T>)await _databaseContext.Set<Product>().Include(p => p.Images).ToListAsync();
+            }
+
             return await _databaseContext.Set<T>().ToListAsync();
         }
 
         public async Task<T> GetById(int id)
         {
-            var result = await _databaseContext.Set<T>().FindAsync(id);
-            return result;
+            if (typeof(T) == typeof(Product))
+            {
+                return await _databaseContext.Set<Product>()
+                    .Include(p => p.Images)
+                    .FirstOrDefaultAsync(p => p.ProductId == id) as T;
+            }
+
+            return await _databaseContext.Set<T>().FindAsync(id);
         }
 
 
