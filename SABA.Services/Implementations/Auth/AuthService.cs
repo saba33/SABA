@@ -71,8 +71,8 @@ namespace PashaBank.Services.Implementation.Auth
             {
                 Token = token,
                 Message = "ტოკენი წარმატებით დაგენერირდა",
-                StatusCode = StatusCodes.Status200OK
-
+                StatusCode = StatusCodes.Status200OK,
+                UserInfo = _mapper.Map<UserDto>(user)
             };
 
         }

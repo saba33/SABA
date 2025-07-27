@@ -9,7 +9,7 @@ namespace SABA.Services.Models.RequestModels.Products
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public ProductTypes ProductType { get; set; }
-        //public List<IFormFile> Images { get; set; }
+        //public List<Microsoft.AspNetCore.Http.IFormFile> Images { get; set; }
         public string ProductSize { get; set; }
     }
 }
